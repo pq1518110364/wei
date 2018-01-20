@@ -54,6 +54,8 @@
 				text : '增加',
 				iconCls : 'icon-add',
 				handler : function(){
+					//bug修复 修改过后清理窗口
+					$("#standardForm").form('clear');
 					$("#standardWindow").window('open');
 				}
 			}, {
@@ -65,7 +67,7 @@
 					var rows = $("#grid").datagrid('getSelections');
 					//判断
 					if(rows.length!=1){
-						$.message.alter("提示","不可以操作多行",warning);
+						$.messager.alert("警告","表单中还存在需要一些非法内容","warning");
 					}else{
 						// 只选中一行 
 						var row = rows[0]; 

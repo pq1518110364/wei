@@ -67,7 +67,7 @@ public class StandardAction extends ActionSupport implements ModelDriven<Standar
 		Page<Standard> pageStandard = standardService.pageStandard(pageable);
 		//数据处理
 		Map<String,Object> map = new HashMap<>(); 
-		map.put("total", pageStandard.getNumberOfElements());
+		map.put("total", pageStandard.getTotalElements());
 		map.put("rows", pageStandard.getContent());
 		//数据返回
 		ActionContext.getContext().getValueStack().push(map);

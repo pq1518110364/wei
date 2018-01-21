@@ -1,5 +1,7 @@
 package cn.itcast.bos.service.base.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,10 +21,16 @@ public class StandardServiceImpl implements StandardService {
 		standardDao.save(standard);
 
 	}
-	
+	//分页查询所有分类标准
 	@Override
 	public Page<Standard> pageStandard(Pageable pageable) {
 		return standardDao.findAll(pageable);
+	}
+	//查询所有的分类标准
+	@Override
+	public List<Standard> findAll() {
+		
+		return standardDao.findAll();
 	}
 	
 	

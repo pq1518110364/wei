@@ -73,18 +73,60 @@
 		id : 'button-edit',
 		text : '修改',
 		iconCls : 'icon-edit',
-		handler : doEdit
+		handler : function(){
+			// 获取当前datagrid选中数据 
+			var rows = $("#grid").datagrid('getSelections');
+			//判断
+			if(rows.length!=1){1
+				$.messager.alert("警告","请勾选具体要修改的数据","warning");
+			}else{
+				// 只选中一行 
+				var row = rows[0]; 
+				// 进行表单回显操作 
+				$("#courier_Form").form('load',row);
+				// 显示窗口
+				$("#addWindow").window('open');
+			}
+		}
 	}, {
 		id : 'button-delete',
 		text : '作废',
 		iconCls : 'icon-cancel',
-		handler : doDelete
+		handler : function(){
+			//可以批量作废 判断是否勾选 获取勾选的行数对象
+		var rows=$("#grid").datagrid('getSelections');
+		if(rows.length==0){
+			$.messager.alert("警告","请勾选具体要作废的数据","warning");
+		}else{
+			//获取勾选行数的id转成String窜绑定到路径后面
+			var array=new Array();
+			for (var i=0;i<rows.length;i++) {
+				array.push(rows[i].id);
+			}
+			var ids=array.join(",");
+			window.location.href="../../courier_delete.action?ids="+ids;
+		}
+		}
 	}, {
 		id : 'button-restore',
 		text : '还原',
 		iconCls : 'icon-save',
-		handler : doRestore
-	}, {
+		handler : function(){
+			//可以批量作废 判断是否勾选 获取勾选的行数对象
+			var rows=$("#grid").datagrid('getSelections');
+			if(rows.length==0){
+				$.messager.alert("警告","请勾选具体要还原的数据","warning");
+			}else{
+				//获取勾选行数的id转成String窜绑定到路径后面
+				var array=new Array();
+				for (var i=0;i<rows.length;i++) {
+					array.push(rows[i].id);
+				}
+				var ids=array.join(",");
+				window.location.href="../../courier_restore.action?ids="+ids;
+			}
+			}
+		}, {
 		id: 'button-search',
 		text : '查询',
 		iconCls : 'icon-search',
@@ -149,12 +191,13 @@
 		width : 80,
 		align : 'center',
 		formatter : function(data, row, index) {
-			if (data == "0") {
-				return "正常使用"
-			} else {
+			if(data=='1') {
 				return "已作废";
+			}else{
+				return "正常使用"
+				}
 			}
-		}
+		
 	}, {
 		field : 'vehicleType',
 		title : '车型',
